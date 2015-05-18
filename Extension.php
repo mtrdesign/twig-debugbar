@@ -20,7 +20,10 @@ Class Extension extends \Twig_Extension
 	{
 		return array(
 			'dbg_render' => new \Twig_Function_Method($this, 'render',  array('is_safe' => array('html'))),
-			'dbg_renderHead'  => new \Twig_Function_Method($this, 'renderHead',  array('is_safe' => array('html')))
+      'dbg_renderHead'  => new \Twig_Function_Method($this, 'renderHead',  array('is_safe' => array('html')))
+
+      $pdo = new \DebugBar\DataCollector\PDO\TraceablePDO(\ORM::get_db());
+      $this->debugbar->addCollector(new \DebugBar\DataCollector\PDO\PDOCollector($pdo));
 		);
 	}
 
