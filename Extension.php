@@ -12,21 +12,23 @@ Class Extension extends \Twig_Extension
 {
 	public function __construct()
 	{
-		$this->debugbar = new \DebugBar\StandardDebugBar();
-		$this->renderer = $this->debugbar->getJavascriptRenderer();
-		
-		$pdo = new \DebugBar\DataCollector\PDO\TraceablePDO(\ORM::get_db());
-      	$this->debugbar->addCollector(new \DebugBar\DataCollector\PDO\PDOCollector($pdo));
+            $this->debugbar = new \DebugBar\StandardDebugBar();
+	    $this->renderer = $this->debugbar->getJavascriptRenderer();
+
+            $this->renderer->disableVendor('fontawesome');
+
+	    $pdo = new \DebugBar\DataCollector\PDO\TraceablePDO(\ORM::get_db());
+            $this->debugbar->addCollector(new \DebugBar\DataCollector\PDO\PDOCollector($pdo));
 	}
 
 	public function getFunctions()
 	{
-		return array(
-			'dbg_render' => new \Twig_Function_Method($this, 'render',  array('is_safe' => array('html'))),
-            'dbg_renderHead' => new \Twig_Function_Method($this, 'renderHead',  array('is_safe' => array('html'))),
-            'dbg_jsAssets' => new \Twig_Function_Method($this, 'dumpJsAssets',  array('is_safe' => array('html'))),
-            'dbg_cssAssets' => new \Twig_Function_Method($this, 'dumpCssAssets',  array('is_safe' => array('html')))
-		);
+	    return array(
+	        'dbg_render' => new \Twig_Function_Method($this, 'render',  array('is_safe' => array('html'))),
+                'dbg_renderHead' => new \Twig_Function_Method($this, 'renderHead',  array('is_safe' => array('html'))),
+                'dbg_jsAssets' => new \Twig_Function_Method($this, 'dumpJsAssets',  array('is_safe' => array('html'))),
+                'dbg_cssAssets' => new \Twig_Function_Method($this, 'dumpCssAssets',  array('is_safe' => array('html')))
+	    );
 	}
 
 	public function render()
