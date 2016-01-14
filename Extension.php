@@ -21,8 +21,9 @@ class Extension extends \Twig_Extension
     $this->renderer->disableVendor('jquery');
     $this->renderer->disableVendor('highlightjs');
 
-    $pdo = new \DebugBar\DataCollector\PDO\TraceablePDO(\ORM::get_db());
-    $this->debugbar->addCollector(new \DebugBar\DataCollector\PDO\PDOCollector($pdo));
+    $debugStack = new \Doctrine\DBAL\Logging\DebugStack();
+    \Helpers\Database::getManager()->getConnection()->getConfiguration()->setSQLLogger($debugStack);
+    $this->debugbar->addCollector(new \DebugBar\Bridge\DoctrineCollector($debugStack));
   }
 
   public function getFunctions()
