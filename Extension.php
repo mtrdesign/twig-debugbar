@@ -11,6 +11,7 @@ namespace Bearlikelion\TwigDebugBar;
 class Extension extends \Twig_Extension
 {
   private $debugbar;
+  private $renderer;
 
   public function __construct()
   {
@@ -29,10 +30,10 @@ class Extension extends \Twig_Extension
   public function getFunctions()
   {
     return array(
-      'dbg_render' => new \Twig_Function_Method($this, 'render',  array('is_safe' => array('html'))),
-      'dbg_renderHead' => new \Twig_Function_Method($this, 'renderHead',  array('is_safe' => array('html'))),
-      'dbg_jsAssets' => new \Twig_Function_Method($this, 'dumpJsAssets',  array('is_safe' => array('html'))),
-      'dbg_cssAssets' => new \Twig_Function_Method($this, 'dumpCssAssets',  array('is_safe' => array('html')))
+      'dbgRender' => new \Twig_SimpleFunction('dbgRender', array($this, 'render'),  array('is_safe' => array('html'))),
+      'dbgRenderHead' => new \Twig_SimpleFunction('dbgRenderHead', array($this, 'renderHead'),  array('is_safe' => array('html'))),
+      'dbgJsAssets' => new \Twig_SimpleFunction('dbgJsAssets', array($this, 'dumpJsAssets'),  array('is_safe' => array('html'))),
+      'dbgCssAssets' => new \Twig_SimpleFunction('dbgCssAssets', array($this, 'dumpCssAssets'),  array('is_safe' => array('html')))
     );
   }
 
@@ -46,7 +47,7 @@ class Extension extends \Twig_Extension
   	return $this->renderer->renderHead();
   }
 
-    public function dumpJsAssets()
+  public function dumpJsAssets()
   {
     return $this->renderer->dumpJsAssets();
   }
