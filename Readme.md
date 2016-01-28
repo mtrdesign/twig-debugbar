@@ -24,10 +24,10 @@ $twig->addExtension(new Bearlikelion\TwigDebugBar\Extension);
 ```html
 <html>
 	<head>
-		{{ dgb_renderHead() }}
+		{{ dbgRenderHead() }}
 	</head>
 	<body>
-		{{ dbg_render() }}
+		{{ dbgRender() }}
 	</body>
 </html>
 ```
